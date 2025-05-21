@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 0
 
@@ -39,7 +39,7 @@ jobs:
     if: needs.check_changed.outputs.directories != '[]'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4.2.2
 
       - name: Copy default TFLint config file
         run: cp .tflint.hcl ~/.tflint.hcl
