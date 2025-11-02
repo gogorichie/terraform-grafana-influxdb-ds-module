@@ -27,7 +27,7 @@ jobs:
               fi
               popd > /dev/null
           done | jq -R . | jq -n '[inputs]' | jq -c 'map(select(length > 0))')
-          echo ::set-output name=directories::$changes
+          echo "directories=$changes" >> $GITHUB_OUTPUT
   tflint:
     runs-on: ubuntu-latest
     needs:

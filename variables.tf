@@ -33,9 +33,11 @@ variable "database_name" {
 }
 
 variable "json_data_encoded" {
+  type    = string
   default = null
 }
 
 variable "secure_json_data_encoded" {
+  type    = string
   default = null
 }
