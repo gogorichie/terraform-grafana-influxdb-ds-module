@@ -1,19 +1,43 @@
+version-resolver:
+  major:
+    labels:
+      - 'semver:major'
+  minor:
+    labels:
+      - 'semver:minor'
+      - 'enhancement'
+  patch:
+    labels:
+      - 'semver:patch'
+      - 'bug'
+  default: patch
+
 template: |
   # What's Changed
   $CHANGES
+
 categories:
-  - title: 'New'
+  - title: '🚀 Features'
     labels:
-     - 'enhancement'
-  - title: 'Bug Fixes'
+      - 'enhancement'
+      - 'semver:minor'
+  - title: '🐛 Bug Fixes'
     labels:
       - 'bug'
-  - title: 'Maintenance'
+      - 'semver:patch'
+  - title: '⚠️ Breaking Changes'
+    labels:
+      - 'semver:major'
+  - title: '🧰 Maintenance'
     labels:
       - 'maintenance'
-  - title: 'Documentation'
+  - title: '📝 Documentation'
     labels:
       - 'documentation'
-  - title: 'Dependency Updates'
+  - title: '📦 Dependency Updates'
     labels:
-    - 'dependencies'
+      - 'dependencies'
+
+exclude-labels:
+  - 'skip-changelog'
+

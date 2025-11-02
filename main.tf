@@ -1,8 +1,7 @@
 # Terraform Block
 provider "grafana" {
-  provider = var.grafana_provider
-  url      = var.grafana_url
-  auth     = var.grafana_auth
+  url  = var.grafana_url
+  auth = var.grafana_auth
 }
 
 # Resource Block

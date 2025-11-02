@@ -1,0 +1,3 @@
+# List of directories to run tflint on
+# Each line should contain a path relative to the repository root
+.
