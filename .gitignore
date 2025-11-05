@@ -34,3 +34,9 @@ override.tf.json
 terraform.rc
 
 .terraform.lock.hcl
+
+# Downloaded terraform binaries
+terraform_*.zip
+
+# License file generated during testing
+LICENSE.txt
