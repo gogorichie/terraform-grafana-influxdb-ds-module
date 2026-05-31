@@ -90,4 +90,47 @@ This module configures the `grafana` provider internally using the `grafana_url`
 
 ## Contributing
 
-Issues and pull requests are welcome on [GitHub](https://github.com/gogorichie/terraform-grafana-influxdb-ds-module). Please run `terraform fmt`, `terraform validate`, and `tflint` before opening a PR.
+Contributions are welcome through [GitHub Issues and Pull Requests](https://github.com/gogorichie/terraform-grafana-influxdb-ds-module).
+
+### 1. Fork and create a branch
+
+- Fork this repository.
+- Create a feature branch from `main` with a descriptive name, for example: `feat/add-timeout-setting` or `fix/readme-example`.
+
+### 2. Make focused changes
+
+- Keep PRs scoped to this module's purpose: provisioning a single `grafana_data_source` of type `influxdb`.
+- Avoid unrelated refactors in the same PR.
+- Never commit secrets, Terraform state files, or `.tfvars` files.
+
+### 3. Run local validation
+
+Run the following commands before opening a PR:
+
+```powershell
+terraform fmt -recursive
+terraform init -backend=false
+terraform validate
+tflint --init
+tflint
+```
+
+If you use pre-commit, you can also run:
+
+```powershell
+pre-commit run --all-files
+```
+
+### 4. Keep documentation in sync
+
+- If you change inputs or outputs, regenerate the README tables using `terraform-docs` (the `terraform_docs` pre-commit hook handles this).
+- Include usage updates in examples when behavior changes.
+
+### 5. Open a pull request
+
+- Describe what changed and why.
+- Include any breaking-change notes clearly in the PR description.
+- Apply an appropriate release label when possible:
+  - `semver:major` for breaking changes
+  - `semver:minor` (or `enhancement`) for new backward-compatible features
+  - `semver:patch` (or `bug`) for fixes
