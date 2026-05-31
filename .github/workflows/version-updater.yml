@@ -5,9 +5,11 @@ on:
 
 jobs:
   actions-tagger:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: Actions-R-Us/actions-tagger@latest
+      - uses: Actions-R-Us/actions-tagger@v2.0.3
         with:
           publish_latest: true
         env:

@@ -1,18 +1,17 @@
-# .github/PULL_REQUEST_TEMPLATE.md
-<!-- If you are clear about what you are doing, type "confirm" without quotation marks after this colon: -->
-
-# .github/workflows/auto_close_pr.yml
 name: Auto Close PR
 on:
   pull_request_target:
     types: [opened]  # so that not trigger when reopened
 
+permissions:
+  pull-requests: write
+
 jobs:
   auto_close_pr:
     runs-on: ubuntu-latest
-    if: github.repository == '<user>/<repo>'
+    if: github.repository == 'gogorichie/terraform-grafana-influxdb-ds-module'
     steps:
-    - uses: imba-tjd/auto-close-pr-action@master
-      with:
-        pattern: ':\s*confirm\s*-->'
-        # message: <optional>
+      - uses: imba-tjd/auto-close-pr-action@0.3.1
+        with:
+          pattern: ':\s*confirm\s*-->'
+          # message: <optional>
