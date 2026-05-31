@@ -15,9 +15,8 @@ The module is intentionally small and single-purpose: it wraps the `grafana_data
 - [provider.tf](provider.tf) — `terraform` block with `required_version` and `required_providers` (grafana `~> 4.0`, Terraform `>= 1.0`).
 - [README.md](README.md) — Public-facing usage documentation.
 - [.tflint.hcl](.tflint.hcl) — TFLint config (recommended preset).
-- [tflint-enabled-directories](tflint-enabled-directories) — Newline-delimited list of directories the TFLint workflow scans (currently `.`).
 - [.pre-commit-config.yaml](.pre-commit-config.yaml) — Hooks: `terraform_fmt`, `terraform_tflint`, `terraform_validate`, `terraform_checkov`, `terraform_docs`, `detect-secrets`, plus `pre-commit-terraform-vars`.
-- [.github/workflows/](.github/workflows) — TFLint on PRs, release-drafter on merge to `main`, Dependabot auto-merge, stale handling, and an auto-close-PR workflow.
+- [.github/workflows/](.github/workflows) — `ci.yml` (TFLint on PRs), `pr-automation.yml` (auto-close template PRs + Dependabot auto-merge), `release.yml` (release-drafter on merge to `main` + major-version tagging on publish), and `stale.yml` (stale handling).
 
 ## Conventions
 

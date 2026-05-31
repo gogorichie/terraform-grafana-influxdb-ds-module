@@ -1,0 +1,46 @@
+name: PR Automation
+
+# Privileged automation that runs against the base repo context.
+# Kept separate from CI (pull_request) so untrusted PR code never runs
+# with the elevated permissions granted here.
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  # Close PRs opened from the template that still contain the confirm marker.
+  auto-close:
+    if: >-
+      github.event.action == 'opened' &&
+      github.repository == 'gogorichie/terraform-grafana-influxdb-ds-module'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: imba-tjd/auto-close-pr-action@0.3.1
+        with:
+          pattern: ':\s*confirm\s*-->'
+
+  # Approve and enable auto-merge for non-major Dependabot updates.
+  dependabot:
+    if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dependabot metadata
+        id: dependabot-metadata
+        uses: dependabot/fetch-metadata@v3.1.0
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Approve and enable auto-merge
+        if: steps.dependabot-metadata.outputs.update-type != 'version-update:semver-major'
+        run: |
+          gh pr review --approve "$PR_URL"
+          gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+# Cancel superseded runs on the same PR to save runner minutes.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  tflint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6.0.2
+
+      - name: Copy default TFLint config file
+        run: cp .tflint.hcl ~/.tflint.hcl
+
+      - name: Cache TFLint plugin dir
+        uses: actions/cache@v5.0.5
+        with:
+          path: ~/.tflint.d/plugins
+          key: v1-tflint-${{ hashFiles('.tflint.hcl') }}
+          restore-keys: |
+            v1-tflint-${{ hashFiles('.tflint.hcl') }}
+            v1-tflint-
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v6.2.2
+        with:
+          tflint_version: v0.43.0
+
+      - name: Init TFLint
+        run: tflint --init --loglevel=info
+
+      - name: Run TFLint
+        run: tflint .
