@@ -37,7 +37,9 @@ jobs:
           tflint_version: v0.43.0
 
       - name: Init TFLint
-        run: tflint --init --loglevel=info
+        run: tflint --init
+        env:
+          TFLINT_LOG: info
 
       - name: Run TFLint
         run: tflint .
