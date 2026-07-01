@@ -27,7 +27,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: release-drafter/release-drafter@v7.3.1
+      - uses: release-drafter/release-drafter@v7.5.1
         with:
           version: ${{ format('v{0}', steps.version.outputs.next-version) }}
           tag: ${{ format('v{0}', steps.version.outputs.next-version) }}
