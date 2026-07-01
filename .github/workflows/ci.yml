@@ -32,7 +32,7 @@ jobs:
             v1-tflint-
 
       - name: Setup TFLint
-        uses: terraform-linters/setup-tflint@v6.2.2
+        uses: terraform-linters/setup-tflint@v6.3.0
         with:
           tflint_version: v0.43.0
 
