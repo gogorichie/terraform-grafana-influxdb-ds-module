@@ -17,13 +17,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v7.0.1
 
       - name: Copy default TFLint config file
         run: cp .tflint.hcl ~/.tflint.hcl
 
       - name: Cache TFLint plugin dir
-        uses: actions/cache@v5.0.5
+        uses: actions/cache@v6.1.0
         with:
           path: ~/.tflint.d/plugins
           key: v1-tflint-${{ hashFiles('.tflint.hcl') }}
@@ -32,7 +32,7 @@ jobs:
             v1-tflint-
 
       - name: Setup TFLint
-        uses: terraform-linters/setup-tflint@v6.2.2
+        uses: terraform-linters/setup-tflint@v6.3.0
         with:
           tflint_version: v0.43.0
 
