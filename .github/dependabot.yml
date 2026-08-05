@@ -1,9 +1,69 @@
+# Dependabot configuration
+#
+# Cadence:  one batched run per month — the 28th at 20:00 America/Chicago.
+# Grouping: every ecosystem below feeds the same `multi-ecosystem-group`, so a
+#           run produces ONE pull request covering Terraform providers/modules
+#           and workflow actions together.
+# Security: Dependabot security updates are NOT bound by this schedule, by the
+#           grouping, or by the cooldown below. They open on their own as soon
+#           as an advisory lands and ignore `open-pull-requests-limit`. Slow
+#           cadence for routine bumps, fast lane for vulnerabilities.
+#
+# Guidance:
+#   https://github.blog/security/supply-chain-security/tame-dependabot-group-your-updates-slow-the-cadence-keep-security-fast/
+#   https://github.blog/security/application-security/cutting-through-the-noise-how-to-prioritize-dependabot-alerts/
+#   https://docs.github.com/en/code-security/dependabot/working-with-dependabot/configuring-multi-ecosystem-updates
+
 version: 2
-updates:
-  - package-ecosystem: "github-actions"
-    directory: "/" # Location of package manifests
+
+# One consolidated pull request across every ecosystem listed under `updates`.
+multi-ecosystem-groups:
+  all-dependencies:
     schedule:
-      interval: "monthly"
+      interval: "cron"
+      cronjob: "0 20 28 * *" # 28th of the month, 8:00 PM
+      timezone: "America/Chicago"
+    # `dependencies` also drives the release-drafter changelog category.
     labels:
-      - "github-actions"
       - "dependencies"
+
+updates:
+  # Terraform providers and module sources in main.tf / provider.tf.
+  - package-ecosystem: "terraform"
+    directory: "/"
+    patterns:
+      - "*"
+    multi-ecosystem-group: "all-dependencies"
+    schedule:
+      interval: "cron"
+      cronjob: "0 20 28 * *"
+      timezone: "America/Chicago"
+    # Let a release sit for a week before adopting it, so the community has a
+    # chance to surface bad publishes. Never applied to security updates.
+    cooldown:
+      default-days: 7
+    labels:
+      - "dependencies"
+      - "terraform"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
+  # Workflow actions used by .github/workflows.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    patterns:
+      - "*"
+    multi-ecosystem-group: "all-dependencies"
+    schedule:
+      interval: "cron"
+      cronjob: "0 20 28 * *"
+      timezone: "America/Chicago"
+    cooldown:
+      default-days: 7
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
