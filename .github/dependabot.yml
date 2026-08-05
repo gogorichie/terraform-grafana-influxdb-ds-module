@@ -27,6 +27,11 @@ multi-ecosystem-groups:
     # `dependencies` also drives the release-drafter changelog category.
     labels:
       - "dependencies"
+    # Set here, not per ecosystem: Dependabot rejects `commit-message`
+    # on updates that belong to a multi-ecosystem group.
+    commit-message:
+      prefix: "chore"
+      include: "scope"
 
 updates:
   # Terraform providers and module sources in main.tf / provider.tf.
@@ -47,9 +52,6 @@ updates:
     labels:
       - "dependencies"
       - "terraform"
-    commit-message:
-      prefix: "chore"
-      include: "scope"
 
   # Workflow actions used by .github/workflows.
   - package-ecosystem: "github-actions"
@@ -67,6 +69,3 @@ updates:
     labels:
       - "dependencies"
       - "github-actions"
-    commit-message:
-      prefix: "chore"
-      include: "scope"
